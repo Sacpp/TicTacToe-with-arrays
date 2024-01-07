@@ -1,0 +1,110 @@
+import java.util.Scanner;  // Import the Scanner class
+public class TicTacToe
+{
+    private String winner;
+    private boolean game = true;
+    private String[] board;
+    private String[] test1;
+    public static void main(String[] args)
+    {
+        TicTacToe game = new TicTacToe();
+        System.out.println(game.game()+"wins");
+    }
+    public TicTacToe()
+    {
+        board = new String[]{"_", "_", "_", "_", "_", "_", "_", "_", "_"};
+    }
+    public void PrintBoard()
+    {
+        
+        for(int i = 0; i<=2;i++)
+        {
+            System.out.print(board[i]);
+        }
+        System.out.println();
+        for(int i = 0; i<=2;i++)
+        {
+            System.out.print(board[i+3]);
+        }
+        System.out.println();
+        for(int i = 0; i<=2;i++)
+        {
+            System.out.print(board[i+6]);
+        }
+        System.out.println();
+
+    }
+    public void drawX(int n)
+    {
+        board[n-1] = "X";
+    }
+    public void drawO(int n)
+    {
+        board[n-1] = "O";
+    }
+    public boolean CheckForWin()
+    {
+
+        if (board[0].equals(board[1])    &&   board[1].equals(board[2]) && board[1]!="_")
+        {
+            winner = board[0];
+            return false;
+        }
+        if (board[3].equals(board[4])    &&   board[4].equals(board[5]) && board[3]!="_")
+        {
+            winner = board[3];
+            return false;
+        }
+        if (board[6].equals(board[7])    &&   board[7].equals(board[8]) && board[8]!="_")
+        {
+            winner = board[6];
+            return false;
+        }
+        if (board[0].equals(board[3])    &&   board[3].equals(board[6]) && board[3]!="_")
+        {
+            winner = board[0];
+            return false;
+        }
+        if (board[1].equals(board[4])    &&   board[4].equals(board[7]) && board[1]!="_")
+        {
+            winner = board[1];
+            return false;
+        }
+        if (board[2].equals(board[5])    &&   board[5].equals(board[8]) && board[5]!="_")
+        {
+            winner = board[2];
+            return false;
+        }
+        if (board[0].equals(board[4])    &&   board[8].equals(board[4]) && board[4]!="_")
+        {
+            winner = board[0];
+            return false;   
+        }
+        if (board[2].equals(board[4])    &&   board[6].equals(board[4]) && board[4]!="_")
+        {
+            winner = board[2];
+            return false;   
+        }        
+        return true;
+   }
+    public String game()
+    {
+        Scanner get = new Scanner(System.in);
+        while (game)
+        {
+        System.out.println("Player X move(num 1-9)");
+        this.drawX(get.nextInt());
+        this.PrintBoard();
+        game = this.CheckForWin();
+        if (game)
+        {
+            System.out.println("Player O move(num 1-9)");
+            this.drawO(get.nextInt());
+            this.PrintBoard();
+            game = this.CheckForWin();
+        }
+        }
+        return winner;
+    }
+}
+    
