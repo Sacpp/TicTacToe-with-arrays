@@ -1,0 +1,113 @@
+import java.util.Scanner;  // Import the Scanner class
+public class xegal{
+    Scanner get = new Scanner(System.in);
+    private String thing;
+    private boolean game = true;
+    private String winner;
+    public xegal()
+    {
+        thing = "_________";
+        game = true;
+        winner = "nothing";
+    }
+
+    public boolean drawX(int x,int y)
+    {
+        int sub = 3*y+x;
+        if (thing.substring(sub,sub+1).equals("_"))
+        {
+            thing = thing.substring(0,sub)+"X"+thing.substring(sub+1);
+            return true;
+        }
+        else
+        { 
+            return false;
+        }
+    }
+    public boolean drawO(int x,int y)
+    {
+        int sub = 3*y+x;
+        if (thing.substring(sub,sub+1).equals("_")){
+            thing = thing.substring(0,sub)+"O"+thing.substring(sub+1);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }   
+    public void drawBoard()
+    {
+        System.out.println(thing.substring(0,3));
+        System.out.println(thing.substring(3,6));
+        System.out.println(thing.substring(6,9));
+    }
+    public void setG(boolean g)
+    {
+        game = g;
+    }
+    public boolean getG()
+    {
+        return game; 
+    }
+    public boolean checkForWin() {
+    for (int i = 0; i < 3; i++) {
+        //rows
+        if (!thing.substring(i * 3, i * 3 + 1).equals("_") &&
+            thing.substring(i * 3, i * 3 + 1).equals(thing.substring(i * 3 + 1, i * 3 + 2)) &&
+            thing.substring(i * 3 + 1, i * 3 + 2).equals(thing.substring(i * 3 + 2, i * 3 + 3))) {
+            winner = thing.substring(i*3,i*3+1);
+        }
+        //colums
+        if (!thing.substring(i, i + 1).equals("_") &&
+            thing.substring(i, i + 1).equals(thing.substring(i + 3, i + 4)) &&
+            thing.substring(i + 3, i + 4).equals(thing.substring(i + 6, i + 7))) {
+            winner = thing.substring(i,i+1);
+        }
+
+    }
+
+    // // Check diagonals
+    if (!thing.substring(0, 1).equals("_") &&
+        thing.substring(0, 1).equals(thing.substring(4, 5)) &&
+        thing.substring(4, 5).equals(thing.substring(8, 9))) {
+        winner = thing.substring(0,1);
+    }
+    if (!thing.substring(2, 3).equals("_") &&
+        thing.substring(2, 3).equals(thing.substring(4, 5)) &&
+        thing.substring(4, 5).equals(thing.substring(6, 7))) {
+        winner = thing.substring(2,3);
+    }
+    if (!winner.equals("nothing"))
+    {
+        return false;
+    }
+    return true;
+    }
+    public String game(){
+    int goX, goY;
+    String t;
+    while (game==true)
+    {
+        System.out.println("Player X where do you want to go (x:y)");
+        t = get.nextLine();
+        goX = Integer.parseInt(t.substring(0,1));
+        goY = Integer.parseInt(t.substring(2,3));
+        this.drawX(goX,goY);
+        this.drawBoard();
+        System.out.println("Player O where do you want to go (x:y)");
+        t = get.nextLine();
+        goX = Integer.parseInt(t.substring(0,1));
+        goY = Integer.parseInt(t.substring(2,3));
+        this.drawO(goX,goY);
+        this.drawBoard();
+        game = this.checkForWin();
+    }
+    return this.winner;
+    }
+    public static void main(String[] args) {
+        xegal game = new xegal();
+        //SHOULD PRINT Variable winner which should be equal to x
+        System.out.println(game.game());
+    }
+}
